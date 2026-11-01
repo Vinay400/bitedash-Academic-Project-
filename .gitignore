@@ -1,0 +1,4 @@
+node_modules/
+bitedash.db
+.env
+.env.*

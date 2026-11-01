@@ -1,0 +1,527 @@
+/* ===================================================
+   BiteDash Food Delivery System - Custom Styles
+   =================================================== */
+
+:root {
+  --primary-color: #ff4757;
+  --primary-hover: #e84118;
+  --secondary-color: #2ed573;
+  --dark-bg: #1e272e;
+  --text-dark: #2f3542;
+  --font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --card-radius: 16px;
+  --transition-smooth: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+body {
+  font-family: var(--font-family);
+  color: var(--text-dark);
+  background-color: #fbfbfc;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 82px;
+}
+
+.nav-anchor {
+  height: 0;
+  scroll-margin-top: 82px;
+}
+
+section[id] {
+  scroll-margin-top: 82px;
+}
+
+/* ================= TOP PROMO BANNER ================= */
+.top-banner {
+  background: linear-gradient(90deg, #ff4757, #ff6b81, #ffa502);
+  font-weight: 500;
+  letter-spacing: 0.2px;
+}
+
+/* ================= NAVBAR ================= */
+.brand-icon {
+  width: 38px;
+  height: 38px;
+  background: linear-gradient(135deg, #ff4757, #ffa502);
+  color: white;
+  border-radius: 10px;
+  font-size: 1.25rem;
+  box-shadow: 0 4px 10px rgba(255, 71, 87, 0.3);
+}
+
+.brand-text {
+  font-size: 1.45rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.navbar .nav-link {
+  font-weight: 600;
+  color: #57606f;
+  padding: 0.5rem 0.85rem !important;
+  border-radius: 8px;
+  transition: var(--transition-smooth);
+}
+
+.navbar .nav-link:hover,
+.navbar .nav-link.active {
+  color: #ff4757 !important;
+  background-color: #fff0f1;
+}
+
+.account-hero {
+  background: linear-gradient(135deg, #fff0f1, #fff8e6);
+}
+
+.account-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-weight: 800;
+  font-size: 1.2rem;
+  background: linear-gradient(135deg, var(--primary-color), #ffa502);
+}
+
+.auth-tabs .nav-link {
+  color: #57606f;
+  font-weight: 700;
+}
+
+.auth-tabs .nav-link.active {
+  background: #fff;
+  color: var(--primary-color);
+  box-shadow: 0 2px 8px rgba(0,0,0,.06);
+}
+
+.order-history-item {
+  border: 1px solid #edf0f5;
+  border-radius: 12px;
+  padding: .7rem .8rem;
+}
+
+.confirmation-header {
+  background: linear-gradient(135deg, #1e272e, #37474f);
+}
+
+.confirmation-check {
+  width: 68px;
+  height: 68px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #2ed573;
+  color: #fff;
+  font-size: 2rem;
+  box-shadow: 0 0 0 8px rgba(46, 213, 115, .18);
+}
+
+.order-timeline {
+  position: relative;
+}
+
+.timeline-step {
+  display: flex;
+  align-items: flex-start;
+  gap: .85rem;
+  min-height: 67px;
+  position: relative;
+}
+
+.timeline-step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: 17px;
+  top: 36px;
+  height: 32px;
+  border-left: 2px dashed #dfe4ea;
+}
+
+.timeline-icon {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 36px;
+  border-radius: 50%;
+  background: #f1f2f6;
+  color: #a4b0be;
+}
+
+.timeline-step.active .timeline-icon {
+  background: #e4f9ec;
+  color: #20bf6b;
+}
+
+.timeline-step strong,
+.timeline-step small {
+  display: block;
+}
+
+.timeline-step small {
+  color: #83909d;
+  margin-top: .2rem;
+}
+
+.confirmation-summary {
+  background: #f8f9fa;
+  border: 1px solid #edf0f5;
+}
+
+.admin-header {
+  background: linear-gradient(135deg, #1e272e, #485460);
+}
+
+.admin-stat {
+  border: 1px solid #edf0f5;
+  border-radius: 14px;
+  padding: .8rem 1rem;
+  background: #f8f9fa;
+}
+
+.admin-stat small,
+.admin-stat strong {
+  display: block;
+}
+
+.admin-stat small {
+  color: #83909d;
+}
+
+.admin-stat strong {
+  font-size: 1.4rem;
+  margin-top: .2rem;
+}
+
+.status-select {
+  min-width: 150px;
+}
+
+.nav-search-box input {
+  background-color: #f1f2f6;
+  border: 1px solid #dfe4ea;
+  padding-left: 2.2rem !important;
+  transition: var(--transition-smooth);
+}
+
+.nav-search-box input:focus {
+  background-color: #ffffff;
+  border-color: #ff4757;
+  box-shadow: 0 0 0 0.2rem rgba(255, 71, 87, 0.15);
+}
+
+/* ================= HERO CAROUSEL ================= */
+.hero-slide {
+  height: 440px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.hero-slide.slide-1 {
+  background-image: url('https://images.unsplash.com/photo-1513104890138-7c749659a591?w=1600&auto=format&fit=crop&q=80');
+}
+
+.hero-slide.slide-2 {
+  background-image: url('https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=1600&auto=format&fit=crop&q=80');
+}
+
+.hero-slide.slide-3 {
+  background-image: url('https://images.unsplash.com/photo-1540420773420-3366772f4999?w=1600&auto=format&fit=crop&q=80');
+}
+
+.hero-overlay {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(17, 24, 39, 0.88) 0%, rgba(17, 24, 39, 0.65) 55%, rgba(17, 24, 39, 0.25) 100%);
+}
+
+.fw-extrabold {
+  font-weight: 800;
+}
+
+.tracking-wide {
+  letter-spacing: 1px;
+}
+
+/* ================= FEATURE ICONS ================= */
+.feature-item {
+  border-radius: 14px;
+  background: #ffffff;
+  transition: var(--transition-smooth);
+}
+
+.feature-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+}
+
+/* ================= RESTAURANT CARDS ================= */
+.restaurant-card {
+  border-radius: var(--card-radius);
+  border: 1px solid #edf0f5;
+  transition: var(--transition-smooth);
+  overflow: hidden;
+  background: #fff;
+}
+
+.restaurant-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.08);
+}
+
+.restaurant-img-wrapper {
+  position: relative;
+  height: 170px;
+  overflow: hidden;
+}
+
+.restaurant-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.restaurant-card:hover .restaurant-img-wrapper img {
+  transform: scale(1.05);
+}
+
+.time-badge {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* ================= FOOD MENU CARDS ================= */
+.food-card {
+  border-radius: var(--card-radius);
+  border: 1px solid #f0f2f5;
+  background: #ffffff;
+  transition: var(--transition-smooth);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.food-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.07);
+}
+
+.food-img-wrapper {
+  position: relative;
+  height: 190px;
+  overflow: hidden;
+  background-color: #f1f2f6;
+}
+
+.food-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.food-card:hover .food-img-wrapper img {
+  transform: scale(1.06);
+}
+
+/* Veg / Non-veg icons */
+.diet-badge {
+  width: 20px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  font-size: 8px;
+}
+
+.diet-badge.veg {
+  border: 2px solid #2ed573;
+}
+
+.diet-badge.veg::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  background-color: #2ed573;
+  border-radius: 50%;
+}
+
+.diet-badge.non-veg {
+  border: 2px solid #ff4757;
+}
+
+.diet-badge.non-veg::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  background-color: #ff4757;
+  border-radius: 50%;
+}
+
+/* Cuisine tag on image */
+.cuisine-tag {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: rgba(30, 39, 46, 0.85);
+  color: white;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  backdrop-filter: blur(4px);
+}
+
+.rating-tag {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(255, 255, 255, 0.95);
+  color: #2f3542;
+  padding: 3px 8px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: #ff4757;
+  border-color: #ff4757;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: #e84118;
+  border-color: #e84118;
+}
+
+.btn-outline-primary {
+  color: #ff4757;
+  border-color: #ff4757;
+}
+
+.btn-outline-primary:hover,
+.btn-check:checked + .btn-outline-primary {
+  background-color: #ff4757;
+  border-color: #ff4757;
+  color: #fff;
+}
+
+/* ================= CART OFFCANVAS STYLING ================= */
+.cart-item {
+  border-bottom: 1px dashed #e4e7eb;
+  padding: 10px 0;
+}
+
+.cart-item-img {
+  width: 60px;
+  height: 60px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.qty-control {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid #ced6e0;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #f8f9fa;
+}
+
+.qty-control button {
+  border: none;
+  background: transparent;
+  width: 28px;
+  height: 28px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.qty-control button:hover {
+  background: #dfe4ea;
+}
+
+.menu-qty-control {
+  border-color: #ff4757;
+  background: #fff0f1;
+}
+
+.menu-qty-control button {
+  color: #ff4757;
+  width: 30px;
+  height: 30px;
+}
+
+.menu-qty-control button:hover {
+  background: #ffd9dd;
+}
+
+.menu-qty-control .qty-value {
+  color: #ff4757;
+}
+
+.qty-control .qty-value {
+  min-width: 24px;
+  text-align: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+/* ================= MODAL STYLING ================= */
+.modal-body-img {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+}
+
+.nutrition-pill {
+  background: #f1f2f6;
+  padding: 6px 12px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+/* ================= FOOTER ================= */
+.hover-primary:hover {
+  color: #ff4757 !important;
+}
+
+.hover-white:hover {
+  color: #ffffff !important;
+}
+
+/* ================= RESPONSIVE ADJUSTMENTS ================= */
+@media (max-width: 768px) {
+  .hero-slide {
+    height: 380px;
+  }
+  .hero-slide h1 {
+    font-size: 1.85rem;
+  }
+  .food-img-wrapper {
+    height: 160px;
+  }
+}

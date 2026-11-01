@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BiteDash | Delicious Food Delivered Fast</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Bootstrap 5.3.3 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ================= TOP NOTIFICATION BAR ================= -->
+  <div class="top-banner py-1 px-3 text-center text-white small">
+    <span>🚀 Free delivery on orders above $25! Use coupon <strong>FREEDEL</strong> at checkout.</span>
+  </div>
+
+  <!-- ================= NAVBAR ================= -->
+  <nav id="mainNavbar" class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm py-2">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center gap-2 fw-bold text-primary" href="#home">
+        <span class="brand-icon d-flex align-items-center justify-content-center">
+          <i class="bi bi-fire"></i>
+        </span>
+        <span class="brand-text">Bite<span class="text-warning">Dash</span></span>
+      </a>
+
+      <!-- Mobile Search & Cart Toggle -->
+      <div class="d-flex align-items-center gap-2 d-lg-none">
+        <button class="btn btn-outline-primary btn-sm position-relative" type="button" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas" aria-controls="cartOffcanvas">
+          <i class="bi bi-cart3 fs-5"></i>
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger cart-badge-count">0</span>
+        </button>
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+
+      <!-- Nav Links & Search -->
+      <div class="collapse navbar-collapse" id="navbarContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-3">
+          <li class="nav-item">
+            <a class="nav-link active" href="#home"><i class="bi bi-house-door me-1"></i>Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#offers"><i class="bi bi-tag me-1"></i>Offers</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#restaurants"><i class="bi bi-shop me-1"></i>Restaurants</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#menu"><i class="bi bi-grid me-1"></i>Menu</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#contact"><i class="bi bi-envelope me-1"></i>Contact</a>
+          </li>
+        </ul>
+
+        <!-- Search Bar in Nav -->
+        <div class="nav-search-box d-flex align-items-center me-lg-3 my-2 my-lg-0 position-relative flex-grow-1" style="max-width: 320px;">
+          <i class="bi bi-search position-absolute ms-3 text-muted"></i>
+          <input id="navSearchInput" class="form-control form-control-sm ps-5 rounded-pill" type="search" placeholder="Search dishes, cuisines..." aria-label="Search">
+        </div>
+
+        <!-- Desktop Cart Button -->
+        <div class="d-none d-lg-flex align-items-center gap-3">
+          <button id="accountTrigger" class="btn btn-light rounded-pill px-3 d-flex align-items-center gap-2" type="button" data-bs-toggle="modal" data-bs-target="#authModal">
+            <i class="bi bi-person-circle"></i><span id="accountLabel">Sign in</span>
+          </button>
+          <button id="adminTrigger" class="btn btn-dark rounded-pill px-3 d-none" type="button" data-bs-toggle="modal" data-bs-target="#adminModal">
+            <i class="bi bi-speedometer2 me-1"></i>Admin
+          </button>
+          <button class="btn btn-primary d-flex align-items-center gap-2 rounded-pill px-3 py-2 position-relative" type="button" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas" aria-controls="cartOffcanvas">
+            <i class="bi bi-cart3"></i>
+            <span class="fw-semibold">My Cart</span>
+            <span class="badge bg-danger rounded-pill cart-badge-count ms-1">0</span>
+            <span class="badge bg-white text-primary rounded-pill cart-total-price ms-1">$0.00</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </nav>
+
+  <!-- ================= ADMIN DASHBOARD ================= -->
+  <div class="modal fade" id="adminModal" tabindex="-1" aria-labelledby="adminModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+      <div class="modal-content border-0 rounded-4 shadow-lg overflow-hidden">
+        <div class="modal-header admin-header text-white">
+          <div><span class="small text-uppercase opacity-75">Operations center</span><h4 class="modal-title fw-bold" id="adminModalLabel">BiteDash Admin Dashboard</h4></div>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-3 p-md-4">
+          <div id="adminFeedback" class="small mb-3"></div>
+          <div class="row g-3 mb-4">
+            <div class="col-6 col-lg-3"><div class="admin-stat"><small>Total orders</small><strong id="adminOrderCount">0</strong></div></div>
+            <div class="col-6 col-lg-3"><div class="admin-stat"><small>Active shipments</small><strong id="adminActiveCount">0</strong></div></div>
+            <div class="col-6 col-lg-3"><div class="admin-stat"><small>Restaurants</small><strong id="adminRestaurantCount">0</strong></div></div>
+            <div class="col-6 col-lg-3"><div class="admin-stat"><small>Revenue</small><strong id="adminRevenue">$0.00</strong></div></div>
+          </div>
+          <ul class="nav nav-tabs mb-3" role="tablist">
+            <li class="nav-item"><button class="nav-link active" data-admin-tab="shipments" type="button">Shipments</button></li>
+            <li class="nav-item"><button class="nav-link" data-admin-tab="restaurants" type="button">Restaurants</button></li>
+          </ul>
+          <section id="adminShipmentsPanel">
+            <div class="table-responsive"><table class="table align-middle small"><thead><tr><th>Order</th><th>Customer</th><th>Address</th><th>Total</th><th>Status</th></tr></thead><tbody id="adminOrdersBody"></tbody></table></div>
+          </section>
+          <section id="adminRestaurantsPanel" class="d-none">
+            <form id="restaurantForm" class="row g-2 mb-3">
+              <div class="col-md-4"><input id="restaurantName" class="form-control form-control-sm" placeholder="Restaurant name" required></div>
+              <div class="col-md-4"><input id="restaurantCuisine" class="form-control form-control-sm" placeholder="Cuisine" required></div>
+              <div class="col-md-4"><input id="restaurantImage" class="form-control form-control-sm" placeholder="Image URL" required></div>
+              <div class="col-md-4"><input id="restaurantDelivery" class="form-control form-control-sm" placeholder="20-30 mins" required></div>
+              <div class="col-md-4"><input id="restaurantMinOrder" class="form-control form-control-sm" placeholder="$10 minimum" required></div>
+              <div class="col-md-4"><input id="restaurantTag" class="form-control form-control-sm" placeholder="Featured tag" required></div>
+              <div class="col-12"><button class="btn btn-primary btn-sm rounded-pill px-3" type="submit"><i class="bi bi-plus-lg me-1"></i>Add restaurant</button></div>
+            </form>
+            <div id="adminRestaurantsList" class="row g-2"></div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= AUTHENTICATION ================= -->
+  <div class="modal fade" id="authModal" tabindex="-1" aria-labelledby="authModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 rounded-4 shadow-lg overflow-hidden">
+        <div class="modal-header border-0 pb-0">
+          <div>
+            <span class="text-primary fw-bold text-uppercase small">Your BiteDash account</span>
+            <h4 class="modal-title fw-extrabold mt-1" id="authModalLabel">Welcome back</h4>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-4">
+          <div id="authForms">
+            <div class="auth-tabs nav nav-pills nav-fill bg-light rounded-pill p-1 mb-4">
+              <button class="nav-link active rounded-pill" data-auth-tab="login" type="button">Sign in</button>
+              <button class="nav-link rounded-pill" data-auth-tab="signup" type="button">Create account</button>
+            </div>
+            <form id="loginForm" class="auth-form">
+              <div class="mb-3"><label class="form-label small fw-semibold">Email</label><input id="loginEmail" type="email" class="form-control" placeholder="you@example.com" required></div>
+              <div class="mb-3"><label class="form-label small fw-semibold">Password</label><input id="loginPassword" type="password" class="form-control" minlength="6" placeholder="At least 6 characters" required></div>
+              <button class="btn btn-primary w-100 rounded-pill fw-bold" type="submit">Sign in <i class="bi bi-arrow-right ms-1"></i></button>
+            </form>
+            <form id="signupForm" class="auth-form d-none">
+              <div class="mb-3"><label class="form-label small fw-semibold">Full name</label><input id="signupName" type="text" class="form-control" placeholder="Alex Morgan" required></div>
+              <div class="mb-3"><label class="form-label small fw-semibold">Email</label><input id="signupEmail" type="email" class="form-control" placeholder="you@example.com" required></div>
+              <div class="mb-3"><label class="form-label small fw-semibold">Password</label><input id="signupPassword" type="password" class="form-control" minlength="6" placeholder="At least 6 characters" required></div>
+              <button class="btn btn-primary w-100 rounded-pill fw-bold" type="submit">Create account <i class="bi bi-person-plus ms-1"></i></button>
+            </form>
+            <p id="authFeedback" class="small mb-0 mt-3 text-center"></p>
+          </div>
+          <div id="accountPanel" class="d-none">
+            <div class="account-hero rounded-4 p-3 mb-3 d-flex align-items-center gap-3">
+              <div id="accountAvatar" class="account-avatar">A</div>
+              <div><h5 id="accountName" class="fw-bold mb-0"></h5><small id="accountEmail" class="text-muted"></small></div>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mb-2"><h6 class="fw-bold mb-0">Recent orders</h6><span class="badge bg-primary-subtle text-primary" id="orderCount">0 orders</span></div>
+            <div id="orderHistory" class="small mb-3"></div>
+            <button id="signOutBtn" class="btn btn-outline-danger w-100 rounded-pill" type="button"><i class="bi bi-box-arrow-right me-1"></i>Sign out</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= HERO & OFFERS CAROUSEL ================= -->
+  <div id="home" class="nav-anchor" aria-hidden="true"></div>
+  <section id="offers" class="offers-section py-4 bg-light">
+    <div class="container">
+      <div id="offersCarousel" class="carousel slide carousel-fade rounded-4 shadow overflow-hidden" data-bs-ride="carousel" data-bs-interval="4500">
+        <!-- Indicators -->
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#offersCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+          <button type="button" data-bs-target="#offersCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+          <button type="button" data-bs-target="#offersCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+
+        <!-- Carousel Items -->
+        <div class="carousel-inner">
+          <!-- Slide 1 -->
+          <div class="carousel-item active hero-slide slide-1">
+            <div class="hero-overlay d-flex align-items-center">
+              <div class="container px-4 px-md-5">
+                <div class="row align-items-center">
+                  <div class="col-lg-7 text-white">
+                    <span class="badge bg-warning text-dark px-3 py-2 rounded-pill fw-bold mb-3 fs-6">
+                      <i class="bi bi-lightning-charge-fill me-1"></i> Mega Welcome Deal
+                    </span>
+                    <h1 class="display-5 fw-extrabold mb-3">Craving Something Special? Get <span class="text-warning">50% OFF</span></h1>
+                    <p class="lead mb-4 opacity-90">Enjoy handcrafted artisan pizzas, sizzling burgers, and regional delicacies delivered piping hot in 30 mins.</p>
+                    <div class="d-flex flex-wrap gap-2 align-items-center">
+                      <a href="#menu" class="btn btn-warning btn-lg rounded-pill px-4 fw-bold text-dark shadow-sm">
+                        Order Now <i class="bi bi-arrow-right ms-1"></i>
+                      </a>
+                      <span class="coupon-tag bg-dark bg-opacity-50 text-white border border-light border-opacity-25 rounded-pill px-3 py-2 small">
+                        Code: <strong>FIRST50</strong>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 2 -->
+          <div class="carousel-item hero-slide slide-2">
+            <div class="hero-overlay d-flex align-items-center">
+              <div class="container px-4 px-md-5">
+                <div class="row align-items-center">
+                  <div class="col-lg-7 text-white">
+                    <span class="badge bg-danger px-3 py-2 rounded-pill fw-bold mb-3 fs-6">
+                      <i class="bi bi-fire me-1"></i> Weekend Feast Special
+                    </span>
+                    <h1 class="display-5 fw-extrabold mb-3">Family Combos & Biryani Feasts at <span class="text-danger-emphasis bg-warning px-2 rounded">Flat $19.99</span></h1>
+                    <p class="lead mb-4 opacity-90">Authentic recipes prepared by master chefs using premium farm-fresh ingredients.</p>
+                    <div class="d-flex flex-wrap gap-2 align-items-center">
+                      <button class="btn btn-danger btn-lg rounded-pill px-4 fw-bold filter-quick-btn" data-filter-cuisine="Indian">
+                        Explore Biryanis <i class="bi bi-arrow-right ms-1"></i>
+                      </button>
+                      <span class="coupon-tag bg-dark bg-opacity-50 text-white border border-light border-opacity-25 rounded-pill px-3 py-2 small">
+                        Code: <strong>FEAST20</strong>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 3 -->
+          <div class="carousel-item hero-slide slide-3">
+            <div class="hero-overlay d-flex align-items-center">
+              <div class="container px-4 px-md-5">
+                <div class="row align-items-center">
+                  <div class="col-lg-7 text-white">
+                    <span class="badge bg-success px-3 py-2 rounded-pill fw-bold mb-3 fs-6">
+                      <i class="bi bi-heart-pulse-fill me-1"></i> Fresh & Healthy Choices
+                    </span>
+                    <h1 class="display-5 fw-extrabold mb-3">Guilt-Free Organic Bowls & <span class="text-success-emphasis bg-light px-2 rounded">100% Vegan Treats</span></h1>
+                    <p class="lead mb-4 opacity-90">Nutritious salads, protein power bowls, and smoothie jars tailored for your healthy lifestyle.</p>
+                    <div class="d-flex flex-wrap gap-2 align-items-center">
+                      <button class="btn btn-success btn-lg rounded-pill px-4 fw-bold filter-quick-btn" data-filter-diet="veg">
+                        Browse Veg Menu <i class="bi bi-arrow-right ms-1"></i>
+                      </button>
+                      <span class="coupon-tag bg-dark bg-opacity-50 text-white border border-light border-opacity-25 rounded-pill px-3 py-2 small">
+                        Code: <strong>GREENLIFE</strong>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Controls -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#offersCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon p-3 bg-dark bg-opacity-50 rounded-circle" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#offersCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon p-3 bg-dark bg-opacity-50 rounded-circle" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= VALUE PROPOSITION / FEATURES ================= -->
+  <section class="py-4 bg-white border-bottom">
+    <div class="container">
+      <div class="row g-4 text-center">
+        <div class="col-6 col-md-3">
+          <div class="feature-item p-3">
+            <div class="feature-icon text-primary mb-2 fs-2"><i class="bi bi-speedometer2"></i></div>
+            <h6 class="fw-bold mb-1">Superfast Delivery</h6>
+            <p class="text-muted small mb-0">Under 30 minutes to your door</p>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="feature-item p-3">
+            <div class="feature-icon text-success mb-2 fs-2"><i class="bi bi-shield-check"></i></div>
+            <h6 class="fw-bold mb-1">100% Hygienic Food</h6>
+            <p class="text-muted small mb-0">Certified safety standards</p>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="feature-item p-3">
+            <div class="feature-icon text-warning mb-2 fs-2"><i class="bi bi-award"></i></div>
+            <h6 class="fw-bold mb-1">Top-Rated Chefs</h6>
+            <p class="text-muted small mb-0">50+ Partner kitchens</p>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="feature-item p-3">
+            <div class="feature-icon text-danger mb-2 fs-2"><i class="bi bi-geo-alt"></i></div>
+            <h6 class="fw-bold mb-1">Live Order Tracking</h6>
+            <p class="text-muted small mb-0">Real-time GPS updates</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FEATURED RESTAURANTS ================= -->
+  <section id="restaurants" class="py-5 bg-light">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-end mb-4 flex-wrap gap-2">
+        <div>
+          <span class="text-primary fw-bold text-uppercase small tracking-wide">Handpicked Partners</span>
+          <h2 class="fw-extrabold mb-0">Popular Restaurants Near You</h2>
+        </div>
+        <p class="text-muted mb-0 small">Explore cuisines from authentic kitchen specialists</p>
+      </div>
+
+      <div class="row g-4" id="restaurantsContainer">
+        <!-- Rendered dynamically by script.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= MENU SECTION WITH DYNAMIC FILTERS ================= -->
+  <section id="menu" class="py-5 bg-white">
+    <div class="container">
+      <!-- Section Header -->
+      <div class="text-center max-w-700 mx-auto mb-4">
+        <span class="text-primary fw-bold text-uppercase small tracking-wide">Our Delicious Menu</span>
+        <h2 class="fw-extrabold">Explore & Order Your Favorite Food</h2>
+        <p class="text-muted">Filtered freshly to your taste. Veg, non-veg, budget-friendly, and all global cuisines.</p>
+      </div>
+
+      <!-- FILTER CONTROLS BAR -->
+      <div class="filter-card p-3 p-md-4 rounded-4 shadow-sm mb-4 bg-light border">
+        <div class="row g-3 align-items-center">
+          
+          <!-- Dietary Type Tabs (All / Veg / Non-Veg) -->
+          <div class="col-12 col-md-6 col-lg-4">
+            <label class="form-label small fw-bold text-muted mb-1">Dietary Preference:</label>
+            <div class="btn-group w-100" role="group" aria-label="Dietary filter">
+              <input type="radio" class="btn-check" name="dietRadio" id="dietAll" value="all" checked autocomplete="off">
+              <label class="btn btn-outline-primary fw-semibold btn-sm" for="dietAll">All Dishes</label>
+
+              <input type="radio" class="btn-check" name="dietRadio" id="dietVeg" value="veg" autocomplete="off">
+              <label class="btn btn-outline-success fw-semibold btn-sm" for="dietVeg">
+                <i class="bi bi-circle-fill text-success small me-1"></i>Pure Veg
+              </label>
+
+              <input type="radio" class="btn-check" name="dietRadio" id="dietNonVeg" value="non-veg" autocomplete="off">
+              <label class="btn btn-outline-danger fw-semibold btn-sm" for="dietNonVeg">
+                <i class="bi bi-circle-fill text-danger small me-1"></i>Non-Veg
+              </label>
+            </div>
+          </div>
+
+          <!-- Cuisine Dropdown -->
+          <div class="col-6 col-md-3 col-lg-3">
+            <label for="cuisineSelect" class="form-label small fw-bold text-muted mb-1">Cuisine:</label>
+            <select id="cuisineSelect" class="form-select form-select-sm fw-semibold">
+              <option value="all" selected>All Cuisines</option>
+              <option value="Italian">Italian 🍕</option>
+              <option value="Indian">Indian 🍛</option>
+              <option value="American">American 🍔</option>
+              <option value="Japanese">Japanese 🍣</option>
+              <option value="Mexican">Mexican 🌮</option>
+              <option value="Healthy">Healthy Bowls 🥗</option>
+            </select>
+          </div>
+
+          <!-- Max Price Slider -->
+          <div class="col-6 col-md-3 col-lg-3">
+            <div class="d-flex justify-content-between align-items-center mb-1">
+              <label for="priceRange" class="form-label small fw-bold text-muted mb-0">Max Price:</label>
+              <span id="priceRangeValue" class="badge bg-primary rounded-pill">$35</span>
+            </div>
+            <input type="range" class="form-range" min="5" max="35" step="1" value="35" id="priceRange">
+          </div>
+
+          <!-- Sort Dropdown -->
+          <div class="col-12 col-md-12 col-lg-2">
+            <label for="sortSelect" class="form-label small fw-bold text-muted mb-1">Sort By:</label>
+            <select id="sortSelect" class="form-select form-select-sm">
+              <option value="popular" selected>Popularity</option>
+              <option value="price-asc">Price: Low to High</option>
+              <option value="price-desc">Price: High to Low</option>
+              <option value="rating">Top Rated</option>
+            </select>
+          </div>
+
+        </div>
+
+        <!-- Filter tags summary & Clear button -->
+        <div class="d-flex justify-content-between align-items-center mt-3 pt-2 border-top flex-wrap gap-2">
+          <div class="small text-muted" id="resultsCount">
+            Showing all items
+          </div>
+          <button id="resetFiltersBtn" class="btn btn-sm btn-link text-decoration-none text-danger p-0">
+            <i class="bi bi-arrow-counterclockwise me-1"></i>Reset all filters
+          </button>
+        </div>
+      </div>
+
+      <!-- FOOD ITEMS GRID -->
+      <div class="row g-4" id="foodItemsContainer">
+        <!-- Rendered dynamically by script.js -->
+      </div>
+
+      <!-- No items found state -->
+      <div id="noResultsState" class="text-center py-5 d-none">
+        <div class="display-1 text-muted"><i class="bi bi-search"></i></div>
+        <h4 class="fw-bold mt-3">No matching dishes found</h4>
+        <p class="text-muted">Try adjusting your filters, selecting a different cuisine, or raising the price range.</p>
+        <button class="btn btn-primary rounded-pill px-4" onclick="document.getElementById('resetFiltersBtn').click()">Reset Filters</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TESTIMONIALS / REVIEWS ================= -->
+  <section class="py-5 bg-light border-top">
+    <div class="container">
+      <div class="text-center mb-5">
+        <span class="text-primary fw-bold text-uppercase small tracking-wide">Testimonials</span>
+        <h2 class="fw-extrabold">Loved by 10,000+ Foodies</h2>
+      </div>
+      <div class="row g-4">
+        <div class="col-12 col-md-4">
+          <div class="card h-100 border-0 shadow-sm rounded-4 p-4">
+            <div class="text-warning mb-3">
+              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+            </div>
+            <p class="card-text text-secondary mb-3">"The food arrived sizzling hot in under 25 minutes! The Truffle Burger and Biryani are absolutely world class. Highly recommended!"</p>
+            <div class="d-flex align-items-center gap-3 mt-auto">
+              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" alt="Sarah J." class="rounded-circle" width="45" height="45" style="object-fit: cover;">
+              <div>
+                <h6 class="fw-bold mb-0">Sarah Jenkins</h6>
+                <small class="text-muted">Verified Foodie</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="card h-100 border-0 shadow-sm rounded-4 p-4">
+            <div class="text-warning mb-3">
+              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+            </div>
+            <p class="card-text text-secondary mb-3">"Clean interface, quick cart updates, and the veg filter helps me find healthy options instantly without reading every single ingredient."</p>
+            <div class="d-flex align-items-center gap-3 mt-auto">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80" alt="Michael R." class="rounded-circle" width="45" height="45" style="object-fit: cover;">
+              <div>
+                <h6 class="fw-bold mb-0">Michael Ray</h6>
+                <small class="text-muted">Fitness Coach</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="card h-100 border-0 shadow-sm rounded-4 p-4">
+            <div class="text-warning mb-3">
+              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-half"></i>
+            </div>
+            <p class="card-text text-secondary mb-3">"The coupon deals saved me $15 on our family dinner! Packaging was completely spill-proof and eco-friendly. Five stars from me."</p>
+            <div class="d-flex align-items-center gap-3 mt-auto">
+              <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&auto=format&fit=crop&q=80" alt="Elena Vasquez" class="rounded-circle" width="45" height="45" style="object-fit: cover;">
+              <div>
+                <h6 class="fw-bold mb-0">Elena Vasquez</h6>
+                <small class="text-muted">Software Engineer</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CONTACT SECTION ================= -->
+  <section id="contact" class="py-5 bg-white">
+    <div class="container">
+      <div class="row g-4 align-items-center">
+        <!-- Contact Info Cards -->
+        <div class="col-lg-5">
+          <span class="text-primary fw-bold text-uppercase small tracking-wide">Get in Touch</span>
+          <h2 class="fw-extrabold mb-3">We'd Love to Hear From You</h2>
+          <p class="text-muted mb-4">Have questions about an order, restaurant partnership, or dietary recommendations? Our customer delight team is available 24/7.</p>
+
+          <div class="d-flex flex-column gap-3">
+            <div class="d-flex align-items-center gap-3 p-3 bg-light rounded-4">
+              <div class="bg-primary text-white rounded-circle p-3 d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                <i class="bi bi-geo-alt fs-5"></i>
+              </div>
+              <div>
+                <h6 class="fw-bold mb-0">Central Headquarters</h6>
+                <small class="text-muted">452 Tech Gourmet Plaza, Silicon Bay, CA</small>
+              </div>
+            </div>
+
+            <div class="d-flex align-items-center gap-3 p-3 bg-light rounded-4">
+              <div class="bg-success text-white rounded-circle p-3 d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                <i class="bi bi-telephone fs-5"></i>
+              </div>
+              <div>
+                <h6 class="fw-bold mb-0">Direct Helpline</h6>
+                <small class="text-muted">+1 (800) 555-BITE (2483)</small>
+              </div>
+            </div>
+
+            <div class="d-flex align-items-center gap-3 p-3 bg-light rounded-4">
+              <div class="bg-warning text-dark rounded-circle p-3 d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                <i class="bi bi-envelope fs-5"></i>
+              </div>
+              <div>
+                <h6 class="fw-bold mb-0">Email Support</h6>
+                <small class="text-muted">support@bitedash.delivery</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact Form with Bootstrap Validation -->
+        <div class="col-lg-7">
+          <div class="card border-0 shadow-lg rounded-4 p-4 p-md-5">
+            <h4 class="fw-bold mb-1">Send us a Message</h4>
+            <p class="text-muted small mb-4">Fill out the form below and we'll reply within 30 minutes.</p>
+
+            <form id="contactForm" class="needs-validation" novalidate>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label for="contactName" class="form-label fw-semibold small">Your Name <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="contactName" placeholder="John Doe" required>
+                  <div class="invalid-feedback">Please enter your name.</div>
+                </div>
+
+                <div class="col-md-6">
+                  <label for="contactEmail" class="form-label fw-semibold small">Email Address <span class="text-danger">*</span></label>
+                  <input type="email" class="form-control" id="contactEmail" placeholder="name@example.com" required>
+                  <div class="invalid-feedback">Please enter a valid email address.</div>
+                </div>
+
+                <div class="col-md-6">
+                  <label for="contactPhone" class="form-label fw-semibold small">Phone Number</label>
+                  <input type="tel" class="form-control" id="contactPhone" placeholder="(555) 000-0000">
+                </div>
+
+                <div class="col-md-6">
+                  <label for="contactSubject" class="form-label fw-semibold small">Inquiry Type <span class="text-danger">*</span></label>
+                  <select class="form-select" id="contactSubject" required>
+                    <option value="" disabled selected>Choose a topic...</option>
+                    <option value="order">Order Tracking & Issues</option>
+                    <option value="restaurant">Partner as Restaurant</option>
+                    <option value="feedback">General Feedback & Praise</option>
+                    <option value="rider">Become a Delivery Hero</option>
+                  </select>
+                  <div class="invalid-feedback">Please select an inquiry topic.</div>
+                </div>
+
+                <div class="col-12">
+                  <label for="contactMessage" class="form-label fw-semibold small">Message <span class="text-danger">*</span></label>
+                  <textarea class="form-control" id="contactMessage" rows="4" placeholder="How can we help you today?" required></textarea>
+                  <div class="invalid-feedback">Please enter your message (at least 10 characters).</div>
+                </div>
+
+                <div class="col-12">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="contactConsent" required>
+                    <label class="form-check-label small text-muted" for="contactConsent">
+                      I agree to receive order notifications and status updates via email/SMS.
+                    </label>
+                    <div class="invalid-feedback">You must check this box before submitting.</div>
+                  </div>
+                </div>
+
+                <div class="col-12">
+                  <button class="btn btn-primary btn-lg w-100 rounded-pill fw-bold" type="submit">
+                    <i class="bi bi-send me-2"></i>Send Message
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="bg-dark text-white pt-5 pb-4">
+    <div class="container">
+      <div class="row g-4 pb-4 border-bottom border-secondary">
+        <div class="col-12 col-md-4">
+          <div class="d-flex align-items-center gap-2 mb-3">
+            <span class="brand-icon bg-primary text-white d-flex align-items-center justify-content-center rounded-circle" style="width: 36px; height: 36px;">
+              <i class="bi bi-fire"></i>
+            </span>
+            <span class="fs-4 fw-bold">Bite<span class="text-warning">Dash</span></span>
+          </div>
+          <p class="text-secondary small pe-md-4">
+            Delivering culinary delight from top restaurants right to your doorstep. Fresh, hygienic, and fast guaranteed every single order.
+          </p>
+          <div class="d-flex gap-3 text-secondary fs-5">
+            <a href="#" class="text-secondary hover-primary"><i class="bi bi-facebook"></i></a>
+            <a href="#" class="text-secondary hover-primary"><i class="bi bi-twitter-x"></i></a>
+            <a href="#" class="text-secondary hover-primary"><i class="bi bi-instagram"></i></a>
+            <a href="#" class="text-secondary hover-primary"><i class="bi bi-youtube"></i></a>
+          </div>
+        </div>
+
+        <div class="col-6 col-md-2">
+          <h6 class="fw-bold mb-3 text-uppercase small text-light">Company</h6>
+          <ul class="list-unstyled small text-secondary d-flex flex-column gap-2">
+            <li><a href="#home" class="text-secondary text-decoration-none hover-white">About Us</a></li>
+            <li><a href="#restaurants" class="text-secondary text-decoration-none hover-white">Our Kitchens</a></li>
+            <li><a href="#" class="text-secondary text-decoration-none hover-white">Careers</a></li>
+            <li><a href="#" class="text-secondary text-decoration-none hover-white">Press & Media</a></li>
+          </ul>
+        </div>
+
+        <div class="col-6 col-md-2">
+          <h6 class="fw-bold mb-3 text-uppercase small text-light">Support</h6>
+          <ul class="list-unstyled small text-secondary d-flex flex-column gap-2">
+            <li><a href="#contact" class="text-secondary text-decoration-none hover-white">Help Center</a></li>
+            <li><a href="#contact" class="text-secondary text-decoration-none hover-white">Refund Policy</a></li>
+            <li><a href="#" class="text-secondary text-decoration-none hover-white">Terms of Service</a></li>
+            <li><a href="#" class="text-secondary text-decoration-none hover-white">Privacy Policy</a></li>
+          </ul>
+        </div>
+
+        <div class="col-12 col-md-4">
+          <h6 class="fw-bold mb-3 text-uppercase small text-light">Stay Updated</h6>
+          <p class="text-secondary small">Subscribe to our newsletter for secret coupons and chef specials.</p>
+          <form id="newsletterForm" class="d-flex gap-2">
+            <input type="email" class="form-control form-control-sm rounded-pill" placeholder="Enter your email" required>
+            <button class="btn btn-warning btn-sm rounded-pill px-3 fw-bold text-dark" type="submit">Join</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-between align-items-center pt-3 flex-wrap gap-2 text-secondary small">
+        <span>&copy; 2026 BiteDash Technologies Inc. All rights reserved.</span>
+        <span>Crafted with <i class="bi bi-heart-fill text-danger"></i> using Bootstrap 5 & JavaScript</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= FOOD ITEM DETAILS MODAL (Bootstrap Component) ================= -->
+  <div class="modal fade" id="itemDetailsModal" tabindex="-1" aria-labelledby="itemDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content border-0 rounded-4 overflow-hidden shadow-lg">
+        <div class="modal-header border-0 pb-0 position-relative">
+          <button type="button" class="btn-close position-absolute top-0 end-0 m-3 bg-white rounded-circle p-2 shadow-sm" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-0" id="itemDetailsModalBody">
+          <!-- Dynamic contents injected by JavaScript -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= DYNAMIC CART OFFCANVAS (Bootstrap Component) ================= -->
+  <div class="offcanvas offcanvas-end rounded-start-4 shadow-lg border-0" tabindex="-1" id="cartOffcanvas" aria-labelledby="cartOffcanvasLabel" style="width: 420px; max-width: 90vw;">
+    <div class="offcanvas-header bg-light border-bottom">
+      <div class="d-flex align-items-center gap-2">
+        <i class="bi bi-basket2-fill text-primary fs-4"></i>
+        <h5 class="offcanvas-title fw-bold" id="cartOffcanvasLabel">Your Order Cart</h5>
+        <span class="badge bg-primary rounded-pill cart-badge-count">0</span>
+      </div>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+
+    <div class="offcanvas-body d-flex flex-column p-3">
+      <!-- Cart items container -->
+      <div id="cartItemsList" class="flex-grow-1 overflow-auto pe-1">
+        <!-- Rendered by script.js -->
+      </div>
+
+      <!-- Empty cart alert -->
+      <div id="emptyCartView" class="text-center my-auto py-5 d-none">
+        <div class="text-muted display-3 mb-3"><i class="bi bi-cart-x"></i></div>
+        <h5 class="fw-bold">Your cart is empty!</h5>
+        <p class="text-muted small">Explore our delicious menu items and add your favorites to checkout.</p>
+        <button class="btn btn-outline-primary btn-sm rounded-pill px-4" data-bs-dismiss="offcanvas" onclick="location.href='#menu'">
+          Browse Menu
+        </button>
+      </div>
+
+      <!-- Cart Bottom Calculations & Actions -->
+      <div id="cartSummarySection" class="border-top pt-3 mt-auto bg-white">
+        <!-- Promo Code Input -->
+        <div class="input-group input-group-sm mb-3">
+          <input type="text" id="promoInput" class="form-control" placeholder="Promo code (e.g. FIRST50)">
+          <button class="btn btn-outline-secondary" type="button" id="applyPromoBtn">Apply</button>
+        </div>
+        <div id="promoFeedback" class="small mb-2"></div>
+
+        <!-- Bill breakdown -->
+        <div class="bill-breakdown small text-secondary mb-3">
+          <div class="d-flex justify-content-between mb-1">
+            <span>Item Subtotal:</span>
+            <span class="fw-semibold text-dark" id="cartSubtotal">$0.00</span>
+          </div>
+          <div class="d-flex justify-content-between mb-1 text-success d-none" id="discountRow">
+            <span>Coupon Discount:</span>
+            <span class="fw-semibold" id="cartDiscount">-$0.00</span>
+          </div>
+          <div class="d-flex justify-content-between mb-1">
+            <span>Delivery Fee:</span>
+            <span class="fw-semibold text-dark" id="cartDeliveryFee">$2.99</span>
+          </div>
+          <div class="d-flex justify-content-between mb-2">
+            <span>Taxes & Service (5%):</span>
+            <span class="fw-semibold text-dark" id="cartTax">$0.00</span>
+          </div>
+          <div class="d-flex justify-content-between border-top pt-2 fs-6 fw-bold text-dark">
+            <span>Grand Total:</span>
+            <span class="text-primary fs-5" id="cartGrandTotal">$0.00</span>
+          </div>
+        </div>
+
+        <div class="d-grid gap-2">
+          <button id="checkoutBtn" class="btn btn-primary py-2 rounded-pill fw-bold shadow-sm" data-bs-toggle="modal" data-bs-target="#checkoutModal">
+            Proceed to Checkout <i class="bi bi-arrow-right ms-1"></i>
+          </button>
+          <button id="clearCartBtn" class="btn btn-outline-danger btn-sm rounded-pill">
+            <i class="bi bi-trash me-1"></i>Clear Cart
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= CHECKOUT MODAL ================= -->
+  <div class="modal fade" id="checkoutModal" tabindex="-1" aria-labelledby="checkoutModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content rounded-4 border-0 shadow-lg">
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title fw-bold" id="checkoutModalLabel"><i class="bi bi-bag-check me-2"></i>Confirm Your Order</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-4">
+          <form id="checkoutForm">
+            <h6 class="fw-bold mb-3">Delivery Information</h6>
+            <div class="mb-3">
+              <label class="form-label small fw-semibold">Delivery Address <span class="text-danger">*</span></label>
+              <textarea class="form-control form-control-sm" id="deliveryAddress" rows="2" placeholder="Street, Flat/Apartment number, Landmark" required></textarea>
+            </div>
+            <div class="row g-2 mb-3">
+              <div class="col-6">
+                <label class="form-label small fw-semibold">City</label>
+                <input type="text" class="form-control form-control-sm" value="Metro City" required>
+              </div>
+              <div class="col-6">
+                <label class="form-label small fw-semibold">Zip / Postal</label>
+                <input type="text" class="form-control form-control-sm" placeholder="90001" required>
+              </div>
+            </div>
+
+            <h6 class="fw-bold mb-2">Payment Method</h6>
+            <div class="d-flex flex-column gap-2 mb-4">
+              <div class="form-check p-2 border rounded-3">
+                <input class="form-check-input ms-1" type="radio" name="paymentOption" id="payOnline" checked>
+                <label class="form-check-label ms-2 small fw-semibold d-flex justify-content-between align-items-center" for="payOnline">
+                  <span><i class="bi bi-credit-card me-2 text-primary"></i>Razorpay Test Checkout</span>
+                  <span class="badge bg-warning-subtle text-warning-emphasis">Demo</span>
+                </label>
+              </div>
+              <div class="form-check p-2 border rounded-3">
+                <input class="form-check-input ms-1" type="radio" name="paymentOption" id="payCOD">
+                <label class="form-check-label ms-2 small fw-semibold d-flex justify-content-between align-items-center" for="payCOD">
+                  <span><i class="bi bi-cash-coin me-2 text-success"></i>Cash on Delivery (COD)</span>
+                </label>
+              </div>
+              <div class="form-check p-2 border border-warning-subtle rounded-3 bg-warning-subtle">
+                <input class="form-check-input ms-1" type="radio" name="paymentOption" id="payDemo">
+                <label class="form-check-label ms-2 small fw-semibold d-flex justify-content-between align-items-center" for="payDemo">
+                  <span><i class="bi bi-play-circle me-2 text-warning-emphasis"></i>Demo Payment</span>
+                  <span class="badge bg-warning text-dark">No keys</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="bg-light p-3 rounded-3 mb-3">
+              <div class="d-flex justify-content-between small fw-bold">
+                <span>Amount Payable:</span>
+                <span class="text-primary fs-6" id="modalFinalPayable">$0.00</span>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-success w-100 py-2 rounded-pill fw-bold">
+              <i class="bi bi-lock-fill me-1"></i>Pay & Place Order
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= ORDER CONFIRMATION ================= -->
+  <div class="modal fade" id="orderConfirmationModal" tabindex="-1" aria-labelledby="orderConfirmationTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content border-0 rounded-4 shadow-lg overflow-hidden">
+        <div class="confirmation-header text-white text-center p-4 p-md-5">
+          <div class="confirmation-check mx-auto mb-3"><i class="bi bi-check-lg"></i></div>
+          <span class="text-uppercase small fw-bold opacity-75">Order confirmed</span>
+          <h2 id="orderConfirmationTitle" class="fw-extrabold mb-2">Your food is on its way!</h2>
+          <p class="mb-0 opacity-90">Thanks for ordering with BiteDash. We have sent the details to your account.</p>
+        </div>
+        <div class="modal-body p-4 p-md-5">
+          <div class="row g-4">
+            <div class="col-md-7">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="fw-bold mb-0">Delivery progress</h5>
+                <span class="badge rounded-pill bg-success-subtle text-success">Order placed</span>
+              </div>
+              <div class="order-timeline">
+                <div class="timeline-step active"><span class="timeline-icon"><i class="bi bi-check-lg"></i></span><div><strong>Order confirmed</strong><small>Restaurant received your order</small></div></div>
+                <div class="timeline-step"><span class="timeline-icon"><i class="bi bi-fire"></i></span><div><strong>Being prepared</strong><small>Your meal is being freshly prepared</small></div></div>
+                <div class="timeline-step"><span class="timeline-icon"><i class="bi bi-bicycle"></i></span><div><strong>Out for delivery</strong><small>Your rider will bring it to your door</small></div></div>
+              </div>
+              <div class="bg-light rounded-3 p-3 mt-4">
+                <div class="d-flex gap-3"><i class="bi bi-geo-alt-fill text-primary fs-5"></i><div><small class="text-muted d-block">Delivering to</small><strong id="confirmationAddress"></strong><span id="confirmationCity" class="text-muted d-block small"></span></div></div>
+              </div>
+            </div>
+            <div class="col-md-5">
+              <div class="confirmation-summary rounded-4 p-3">
+                <div class="d-flex justify-content-between mb-3"><span class="text-muted">Order number</span><strong id="confirmationOrderId"></strong></div>
+                <div class="d-flex justify-content-between mb-3"><span class="text-muted">Estimated arrival</span><strong class="text-success">25–30 mins</strong></div>
+                <div class="d-flex justify-content-between mb-3"><span class="text-muted">Payment</span><strong id="confirmationPayment"></strong></div>
+                <div class="border-top pt-3 d-flex justify-content-between fs-5"><strong>Total paid</strong><strong class="text-primary" id="confirmationTotal"></strong></div>
+              </div>
+              <div class="d-grid gap-2 mt-3">
+                <button type="button" class="btn btn-primary rounded-pill fw-bold" data-bs-dismiss="modal" onclick="document.getElementById('menu').scrollIntoView({ behavior: 'smooth' });">Order more food</button>
+                <button type="button" class="btn btn-outline-secondary rounded-pill" data-bs-dismiss="modal" id="viewOrdersBtn"><i class="bi bi-person me-1"></i>View my orders</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= TOAST NOTIFICATION ================= -->
+  <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1090;">
+    <div id="liveToast" class="toast align-items-center text-white bg-dark border-0 shadow-lg rounded-4" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body d-flex align-items-center gap-2">
+          <i id="toastIcon" class="bi bi-check-circle-fill text-success fs-5"></i>
+          <span id="toastMessage">Action completed successfully!</span>
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap 5.3.3 JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <!-- Custom JS -->
+  <script src="js/script.js"></script>
+</body>
+</html>
